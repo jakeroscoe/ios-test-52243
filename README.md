@@ -33,5 +33,7 @@ Resources:
 
 https://developers.themoviedb.org/3/getting-started/authentication
 
+UI Example:
+
 ![movie_search_example](https://user-images.githubusercontent.com/6242978/196581128-e1a0d822-aa28-4372-8906-02fdbaefeef2.gif)
 
