@@ -15,17 +15,17 @@ Prerequisites/reading:
 Requirements:
 
 1. Establish view(s) (use UIKit or SwiftUI): Search view, search results view, detail view
-2. Get and display data from moviedb
+2. Get and display data from OMDb API
 
 UI Flow:
 
-1. Search view: provide option to query moviedb for movie titles
+1. Search view: provide option to query OMDb API for movie titles
 2. Search results view: display results from query
 3. Detail view: display details about movie (choose any, must include image)
 
 Nice to have:
 
-1. Improve basic OOTB UI
+1. Improve basic Swift OOTB UI
 2. Cache data/images for better performance
 3. Empty for "no results"
 
