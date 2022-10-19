@@ -31,7 +31,7 @@ Nice to have:
 
 Resources:
 
-https://developers.themoviedb.org/3/getting-started/authentication
+https://omdbapi.com/
 
 UI Example:
 
