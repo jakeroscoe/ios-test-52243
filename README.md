@@ -29,6 +29,12 @@ Nice to have:
 2. Cache data/images for better performance
 3. Empty for "no results"
 
+Submission and next steps:
+
+1. Deposit code to the https://github.com/jakeroscoe/ios-test-52243 repository.
+2. Notify interviewer once complete.
+3. Prepare to present and discuss the project in detail.
+
 Resources:
 
 https://omdbapi.com/
