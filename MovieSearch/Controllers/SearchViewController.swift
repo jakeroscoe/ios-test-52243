@@ -10,6 +10,13 @@ import Alamofire
 
 class SearchViewController: UIViewController {
     
+    struct TableView {
+        struct CellIdentifiers {
+            static let movieCell = "MovieCell"
+            static let noResultsCell = "NoResults"
+        }
+    }
+    
     var searchResults: [SearchResult] = []
     var hasSearched = false
 
@@ -17,6 +24,12 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         
         tableView.contentInset = UIEdgeInsets(top: 46, left: 0, bottom: 0, right: 0)
+
+        var cellNib = UINib(nibName: TableView.CellIdentifiers.movieCell, bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.movieCell)
+        
+        cellNib = UINib(nibName: TableView.CellIdentifiers.noResultsCell, bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.noResultsCell)
     }
 
     @IBOutlet weak var searchBar: UISearchBar!
@@ -34,7 +47,7 @@ extension SearchViewController: UISearchBarDelegate {
             for i in 1...3 {
                 let searchResult = SearchResult()
                 searchResult.title = searchBar.text!
-                searchResult.name = String(format: "Fake result %d for '\(searchResult.title)'", i)
+                searchResult.year = String(format: "Fake result %d for '\(searchResult.title)'", i)
                 searchResults.append(searchResult)
             }
         }
@@ -68,29 +81,15 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "SearchResultCell"
-        var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
-        
-        if cell == nil {
-            cell = UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
-        }
-        
-        // get a list content configuration that has preconfigured default styling.
-        var content = cell!.defaultContentConfiguration()
-
-        
         if searchResults.count == 0 {
-            content.text = "(Nothing found)"
-            content.secondaryText = ""
+            return tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.noResultsCell, for: indexPath)
         } else {
-            // assign your content to it, customize any other properties
-            content.text = "\(searchResults[indexPath.row].name)"
-            content.secondaryText = "\(searchResults[indexPath.row].title)"
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.movieCell, for: indexPath) as! MCTableViewCell
+            let searchResult = searchResults[indexPath.row]
+            cell.titleLabel.text = searchResult.title
+            cell.yearLabel.text = searchResult.year
+            return cell
         }
-        // assign it to your view as the current content configuration
-        cell!.contentConfiguration = content
-        
-        return cell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
