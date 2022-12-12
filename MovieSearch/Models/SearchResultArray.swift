@@ -21,4 +21,5 @@ struct Movie: Codable {
     var Title: String
     var Year: String
     var Poster: String
+    var imdbID: String
 }

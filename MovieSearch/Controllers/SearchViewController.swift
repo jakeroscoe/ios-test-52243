@@ -49,7 +49,7 @@ class SearchViewController: UIViewController {
           print(result.description)
         return result.Search
       } catch {
-        print("Parse JSON Error: \(error)")
+        print("JSON parsing error: \(error)")
         return []
       }
     }
@@ -103,6 +103,14 @@ extension SearchViewController: UISearchBarDelegate {
 //        print("text is changing: '\(searchBar.text!)'")
     }
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchResults = []
+        hasSearched = false
+        searchBar.text = ""
+        searchBar.becomeFirstResponder()
+        tableView.reloadData()
+    }
+    
     func position(for bar: UIBarPositioning) -> UIBarPosition {
         return .topAttached
     }
@@ -135,6 +143,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        self.performSegue(withIdentifier: "goToDetails", sender: self)
     }
     
     // only able to select rows when they exist
@@ -143,6 +152,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             return nil
         } else {
             return indexPath
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToDetails" {
+            let destinationVC = segue.destination as! DetailViewController
         }
     }
 }
