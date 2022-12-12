@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2D9EBB8D29410CBC004379F4 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9EBB8C29410CBC004379F4 /* SearchResult.swift */; };
+		2D9EBB8D29410CBC004379F4 /* SearchResultArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9EBB8C29410CBC004379F4 /* SearchResultArray.swift */; };
 		2D9EBB8F294248FA004379F4 /* MovieCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D9EBB8E294248FA004379F4 /* MovieCell.xib */; };
 		2D9EBB91294288DA004379F4 /* MCTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9EBB90294288DA004379F4 /* MCTableViewCell.swift */; };
 		2D9EBB93294291F6004379F4 /* NoResults.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D9EBB92294291F6004379F4 /* NoResults.xib */; };
+		2D9EBB952943EA57004379F4 /* MovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9EBB942943EA57004379F4 /* MovieModel.swift */; };
+		2D9EBB982947C2A7004379F4 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2D9EBB972947C2A7004379F4 /* Kingfisher */; };
 		2DAD493E2940FB38006A58C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAD493D2940FB38006A58C5 /* AppDelegate.swift */; };
 		2DAD49402940FB38006A58C5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAD493F2940FB38006A58C5 /* SceneDelegate.swift */; };
 		2DAD49422940FB38006A58C5 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAD49412940FB38006A58C5 /* SearchViewController.swift */; };
@@ -22,10 +24,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2D9EBB8C29410CBC004379F4 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
+		2D9EBB8C29410CBC004379F4 /* SearchResultArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultArray.swift; sourceTree = "<group>"; };
 		2D9EBB8E294248FA004379F4 /* MovieCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieCell.xib; sourceTree = "<group>"; };
 		2D9EBB90294288DA004379F4 /* MCTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTableViewCell.swift; sourceTree = "<group>"; };
 		2D9EBB92294291F6004379F4 /* NoResults.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoResults.xib; sourceTree = "<group>"; };
+		2D9EBB942943EA57004379F4 /* MovieModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieModel.swift; sourceTree = "<group>"; };
 		2DAD493A2940FB38006A58C5 /* MovieSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DAD493D2940FB38006A58C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2DAD493F2940FB38006A58C5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -42,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D9EBB982947C2A7004379F4 /* Kingfisher in Frameworks */,
 				2DAD495A29410A43006A58C5 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,7 +56,8 @@
 		2D9EBB8929410C68004379F4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				2D9EBB8C29410CBC004379F4 /* SearchResult.swift */,
+				2D9EBB8C29410CBC004379F4 /* SearchResultArray.swift */,
+				2D9EBB942943EA57004379F4 /* MovieModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -126,6 +131,7 @@
 			name = MovieSearch;
 			packageProductDependencies = (
 				2DAD495929410A43006A58C5 /* Alamofire */,
+				2D9EBB972947C2A7004379F4 /* Kingfisher */,
 			);
 			productName = MovieSearch;
 			productReference = 2DAD493A2940FB38006A58C5 /* MovieSearch.app */;
@@ -157,6 +163,7 @@
 			mainGroup = 2DAD49312940FB38006A58C5;
 			packageReferences = (
 				2DAD495829410A43006A58C5 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				2D9EBB962947C2A7004379F4 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 2DAD493B2940FB38006A58C5 /* Products */;
 			projectDirPath = "";
@@ -187,11 +194,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D9EBB952943EA57004379F4 /* MovieModel.swift in Sources */,
 				2D9EBB91294288DA004379F4 /* MCTableViewCell.swift in Sources */,
 				2DAD49422940FB38006A58C5 /* SearchViewController.swift in Sources */,
 				2DAD493E2940FB38006A58C5 /* AppDelegate.swift in Sources */,
 				2DAD49482940FB38006A58C5 /* MovieSearch.xcdatamodeld in Sources */,
-				2D9EBB8D29410CBC004379F4 /* SearchResult.swift in Sources */,
+				2D9EBB8D29410CBC004379F4 /* SearchResultArray.swift in Sources */,
 				2DAD49402940FB38006A58C5 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,6 +420,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2D9EBB962947C2A7004379F4 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		2DAD495829410A43006A58C5 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -423,6 +439,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2D9EBB972947C2A7004379F4 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2D9EBB962947C2A7004379F4 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		2DAD495929410A43006A58C5 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2DAD495829410A43006A58C5 /* XCRemoteSwiftPackageReference "Alamofire" */;
