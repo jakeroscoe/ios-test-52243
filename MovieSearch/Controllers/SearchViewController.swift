@@ -40,26 +40,13 @@ class SearchViewController: UIViewController {
         let searchUrl = URL(string: "https://www.omdbapi.com/?i=tt3896198&apikey=919af252&&type=movie&s=\(encodedSearch)")
         return searchUrl!
     }
-    
-    func parse(data: Data) -> [Movie] {
-      do {
-        let decoder = JSONDecoder()
-        let result = try decoder.decode(
-          SearchResultArray.self, from: data)
-          print(result.description)
-        return result.Search
-      } catch {
-        print("JSON parsing error: \(error)")
-        return []
-      }
-    }
 
-    func showSearchError() {
-        let alert = UIAlertController(title: "Oh no!", message: "There was a problem connecting to the network. Please try again.", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default)
-        alert.addAction(action)
-        present(alert, animated: true)
-    }
+//    func showSearchError() {
+//        let alert = UIAlertController(title: "Oh no!", message: "There was a problem connecting to the network. Please try again.", preferredStyle: .alert)
+//        let action = UIAlertAction(title: "OK", style: .default)
+//        alert.addAction(action)
+//        present(alert, animated: true)
+//    }
     
 }
 
@@ -68,39 +55,29 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if !searchBar.text!.isEmpty {
             searchBar.resignFirstResponder()
+            // this will make the cancel button disabled
             
             searchResults = []
             hasSearched = true
             
             let url = omdbURL(searchText: searchBar.text!)
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                if let error = error {
-                    print("Search error: \(error.localizedDescription)")
-                } else {
-                    if let safeData = data {
-                        self.searchResults = self.parse(data: safeData)
-                        
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
-                        return
-                    }
-                }
-                
-                DispatchQueue.main.async {
-                    self.hasSearched = false
-                    self.tableView.reloadData()
-                    self.showSearchError()
-                }
-            } // completion handler
-            
-            task.resume()
+
+            fetchMovies(for: url)
         }
     }
 
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 //        print("text is changing: '\(searchBar.text!)'")
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        // keep cancel button enabled
+        DispatchQueue.main.async {
+            if let cancelButton = searchBar.value(forKey: "cancelButton") as? UIButton {
+                cancelButton.isEnabled = true
+            }
+        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -143,7 +120,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.performSegue(withIdentifier: "goToDetails", sender: self)
+        self.performSegue(withIdentifier: "goToDetails", sender: indexPath)
     }
     
     // only able to select rows when they exist
@@ -158,6 +135,33 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToDetails" {
             let destinationVC = segue.destination as! DetailViewController
+            let indexPath = sender as! IndexPath
+            let searchResult = searchResults[indexPath.row]
+            destinationVC.searchResult = searchResult
+            print(sender!)
+        }
+    }
+}
+
+// MARK: - Alamofire Request
+
+extension SearchViewController {
+    func fetchMovies(for url: URL) {
+        AF.request(url).responseDecodable(of: SearchResultArray.self) { response in
+            if let error = response.error {
+                print("Search error: \(error.localizedDescription)")
+                self.searchResults = []
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            } else {
+                if let results = response.value?.Search {
+                    self.searchResults = results
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            }
         }
     }
 }

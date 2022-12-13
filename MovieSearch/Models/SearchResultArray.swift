@@ -7,13 +7,7 @@
 
 import Foundation
 
-class SearchResultArray: Codable, CustomStringConvertible {
-//    var count = 0
-    var description: String {
-        return Search.reduce("") { partialResult, mov in
-            partialResult + "\(mov.Title) \(mov.Year) \n"
-        }
-    }
+struct SearchResultArray: Codable {
     var Search: [Movie]
 }
 
