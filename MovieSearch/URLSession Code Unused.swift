@@ -46,3 +46,14 @@ let task = URLSession.shared.dataTask(with: url) { data, response, error in
    }
  }
  */
+
+// -----------------------------------------------------------------------
+
+/*
+ func showSearchError() {
+     let alert = UIAlertController(title: "Oh no!", message: "There was a problem connecting to the network. Please try again.", preferredStyle: .alert)
+     let action = UIAlertAction(title: "OK", style: .default)
+     alert.addAction(action)
+     present(alert, animated: true)
+ }
+ */

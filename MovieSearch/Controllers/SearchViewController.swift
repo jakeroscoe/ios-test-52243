@@ -21,6 +21,7 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.prefersLargeTitles = true
         tableView.contentInset = UIEdgeInsets(top: 46, left: 0, bottom: 0, right: 0)
 
         var cellNib = UINib(nibName: CellIdentifiers.movieCell, bundle: nil)
@@ -40,14 +41,6 @@ class SearchViewController: UIViewController {
         let searchUrl = URL(string: "https://www.omdbapi.com/?i=tt3896198&apikey=919af252&&type=movie&s=\(encodedSearch)")
         return searchUrl!
     }
-
-//    func showSearchError() {
-//        let alert = UIAlertController(title: "Oh no!", message: "There was a problem connecting to the network. Please try again.", preferredStyle: .alert)
-//        let action = UIAlertAction(title: "OK", style: .default)
-//        alert.addAction(action)
-//        present(alert, animated: true)
-//    }
-    
 }
 
 // MARK: - Search Bar Delegate Methods
@@ -68,7 +61,7 @@ extension SearchViewController: UISearchBarDelegate {
 
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        print("text is changing: '\(searchBar.text!)'")
+        // fetch could possibly be performed here on every letter input?
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
@@ -97,7 +90,7 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if !hasSearched {
-            return 0
+            return 1
         } else if searchResults.count == 0 {
             return 1
         } else {
@@ -106,9 +99,15 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if searchResults.count == 0 {
+        self.tableView.separatorStyle = .none
+        if !hasSearched {
+            let startSearchIdentifier = "startSearch"
+            let startSearch = UITableViewCell(style: .default, reuseIdentifier: startSearchIdentifier)
+            startSearch.textLabel!.text = "Enter a movie title above to start your search!"
+//            print(startSearch.textLabel!.text!)
+            return startSearch
+        } else if searchResults.count == 0 {
             let noResults = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.noResultsCell, for: indexPath)
-            self.tableView.separatorStyle = .none
             searchBar.text = ""
             searchBar.becomeFirstResponder()
             return noResults
@@ -143,12 +142,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             let indexPath = sender as! IndexPath
             let searchResult = searchResults[indexPath.row]
             destinationVC.searchResult = searchResult
-            print(sender!)
         }
     }
 }
 
-// MARK: - Alamofire Request
+// MARK: - Alamofire Fetch Request
 
 extension SearchViewController {
     func fetchMovies(for url: URL) {
