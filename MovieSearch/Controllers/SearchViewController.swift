@@ -107,13 +107,18 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if searchResults.count == 0 {
-            return tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.noResultsCell, for: indexPath)
+            let noResults = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.noResultsCell, for: indexPath)
+            self.tableView.separatorStyle = .none
+            searchBar.text = ""
+            searchBar.becomeFirstResponder()
+            return noResults
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.movieCell, for: indexPath) as! MCTableViewCell
             let searchResult = searchResults[indexPath.row]
             cell.titleLabel.text = searchResult.Title
             cell.yearLabel.text = searchResult.Year
             cell.posterImageView.kf.setImage(with: URL(string: searchResult.Poster))
+            cell.accessoryType = .disclosureIndicator
             return cell
         }
     }
